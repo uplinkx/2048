@@ -1,4 +1,4 @@
-NAME = cweb.html
+NAME = index.html
 
 FLAGS = -Wall -Wextra -Werror
 INCLUDES = -I includes/

@@ -38,7 +38,6 @@ void	main_loop(void *v_cxt)
 
 	SDL_RenderPresent(display->renderer);
 	SDL_RenderClear(display->renderer);
-
 }
 
 int main(void)
