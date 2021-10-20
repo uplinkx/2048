@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 20:52:34 by home              #+#    #+#             */
-/*   Updated: 2021/10/19 22:47:54 by home             ###   ########.fr       */
+/*   Updated: 2021/10/19 23:34:01 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,19 +161,30 @@ void	spawn_tiles(int *board)
 {
 	int	i;
 	int	spawn_chance;
+	SDL_bool	spawned;
 
-	i = 0;
-	while (i < 16)
+	spawned = SDL_FALSE;
+	while (spawned == SDL_FALSE)
 	{
-		if (board[i] == 0)
+		i = 0;
+		while (i < 16)
 		{
-			spawn_chance = rand() % 50;
-			if (spawn_chance < 2)
-				board[i] = 2;
-			else if (spawn_chance < 3)
-				board[i] = 4;
+			if (board[i] == 0)
+			{
+				spawn_chance = rand() % 50;
+				if (spawn_chance < 2)
+				{
+					board[i] = 2;
+					spawned = SDL_TRUE;
+				}
+				else if (spawn_chance < 3)
+				{
+					board[i] = 4;
+					spawned = SDL_TRUE;
+				}
+			}
+			i++;
 		}
-		i++;
 	}
 }
 

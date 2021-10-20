@@ -37,3 +37,35 @@ void	*new_scene(size_t size, t_game_context *context, char *background_path, voi
 
 	return (result);
 }
+
+SDL_bool	game_over(int *board)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (i < 16)
+	{
+		if (board[i] != 0)
+			count++;
+		i++;
+	}
+
+	if (count == 16) { return (SDL_TRUE); }
+	else { return (SDL_FALSE); }
+}
+
+void	*button_trigger_scene_switch(SDLX_button *self, void *vp_context, SDL_UNUSED size_t length)
+{
+	t_game_context *context;
+
+	if (SDLX_GAME_RELEASE(g_GameInput, g_GameInput_prev, primleft))
+	{
+		context = vp_context;
+		context->init_fn = self->meta1;
+		context->shouldChange = SDL_TRUE;
+	}
+
+	return (NULL);
+}

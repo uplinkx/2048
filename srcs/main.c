@@ -10,7 +10,7 @@ void	game_context_initialize(t_game_context *game_state)
 	game_state->shouldChange = SDL_TRUE;
 	game_state->shouldQuit = SDL_FALSE;
 
-	game_state->init_fn = level_select_init;
+	game_state->init_fn = level_init;
 
 	game_state->game_over = false;
 
@@ -32,7 +32,7 @@ void	main_loop(void *context_addr)
 	}
 
 	SDLX_KeyMap(&(g_GameInput.key_mapper), g_GameInput.keystate);
-	// SDLX_GameInput_Mouse_Fill(&(g_GameInput), SDL_TRUE);
+	SDLX_GameInput_Mouse_Fill(&(g_GameInput), SDL_TRUE);
 
 	context->update_fn(context, context->meta);
 
@@ -44,13 +44,13 @@ void	main_loop(void *context_addr)
 
 	SDLX_record_input(NULL);
 
-	// if (context->shouldChange == SDL_TRUE)
-	// {
-	// 	SDLX_CollisionBucket_Flush(NULL);
-	// 	SDLX_RenderQueue_Flush(NULL, SDLX_GetDisplay()->renderer, SDL_FALSE);
+	if (context->shouldChange == SDL_TRUE)
+	{
+		SDLX_CollisionBucket_Flush(NULL);
+		SDLX_RenderQueue_Flush(NULL, SDLX_GetDisplay()->renderer, SDL_FALSE);
 
-	// 	context->close_fn(context, context->meta);
-	// }
+		context->close_fn(context, context->meta);
+	}
 }
 
 int main(void)

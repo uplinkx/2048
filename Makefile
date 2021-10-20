@@ -39,11 +39,13 @@ SRC_NAMES = \
 	$(addprefix $(SDLX_DIR), $(SDLX_NAMES))	\
 	carve_texture \
 	game_input \
+	game_over \
 	itow \
 	level_scene \
 	main \
 	render \
 	scene_utils \
+	sprite_button \
 	update \
 
 # List of all the source files, folders are to be added by
