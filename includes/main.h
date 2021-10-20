@@ -1,5 +1,5 @@
-#ifndef MAiN_H
-# define MAiN_H
+#ifndef MAIN_H
+# define MAIN_H
 
 # include <time.h>
 
