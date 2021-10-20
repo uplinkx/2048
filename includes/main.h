@@ -18,7 +18,7 @@ void		*button_trigger_scene_switch(SDLX_button *self, void *vp_context, SDL_UNUS
 
 void	draw_board(int *board, SDL_Texture *texture, SDL_Rect *rects);
 void	draw_grid(SDLX_Display *display);
-void	slide_board(int *board, int *lock, int action);
+int		slide_board(int *board, int *lock, int action);
 void	spawn_tiles(int *board);
 
 void	itow(int n, SDL_Rect dest, SDLX_Display *dislay);

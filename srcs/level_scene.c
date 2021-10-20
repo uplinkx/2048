@@ -22,6 +22,8 @@ typedef struct	s_level_scene
 	int			lock[16];
 	int			prev_board[16];
 	int			board[16];
+
+	int			score;
 }				t_level_scene;
 
 void	*level_init(t_game_context *context, void *vp_scene)
@@ -40,16 +42,23 @@ void	*level_init(t_game_context *context, void *vp_scene)
 	bzero(scene->board, sizeof(scene->board));
 	spawn_tiles(scene->board);
 
+	scene->score = 0;
+
 	(void)vp_scene;
 	return (NULL);
 }
 
 void	*level_close(t_game_context *context, void *vp_scene)
 {
+	t_level_scene *scene;
 
+	scene = vp_scene;
 	context->init_fn = gameover_scene_init;
 
-	(void)vp_scene;
+	context->score = scene->score;
+	context->hiscore = SDL_max(context->hiscore, context->score);
+
+	SDL_free(scene);
 	return (NULL);
 }
 
@@ -67,7 +76,7 @@ void	*level_update(SDL_UNUSED t_game_context *context, void *vp_scene)
 	{
 		bzero(scene->lock, sizeof(scene->lock));
 		memcpy(scene->prev_board, scene->board, sizeof(scene->prev_board));
-		slide_board(scene->board, scene->lock, scene->action);
+		scene->score += slide_board(scene->board, scene->lock, scene->action);
 		spawn_tiles(scene->board);
 	}
 

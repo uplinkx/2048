@@ -6,18 +6,20 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 20:52:34 by home              #+#    #+#             */
-/*   Updated: 2021/10/19 23:34:01 by home             ###   ########.fr       */
+/*   Updated: 2021/10/20 00:06:25 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	slide_left(int *board, int *lock, int offset)
+int	slide_left(int *board, int *lock, int offset)
 {
 	int i;
 	int j;
+	int	score_add;
 
 	i = 0;
+	score_add = 0;
 	while (i <= 3)
 	{
 		j = i - 1;
@@ -26,6 +28,7 @@ void	slide_left(int *board, int *lock, int offset)
 
 		if (j >= 0 && board[i + offset] == board[j + offset] && lock[j + offset] == 0)
 		{
+			score_add += board[i + offset];
 			board[j + offset] += board[i + offset];
 			board[i + offset] = 0;
 			lock[j + offset] = 1;
@@ -37,14 +40,17 @@ void	slide_left(int *board, int *lock, int offset)
 		}
 		i++;
 	}
+	return (score_add);
 }
 
-void	slide_right(int *board, int *lock, int offset)
+int	slide_right(int *board, int *lock, int offset)
 {
 	int i;
 	int j;
+	int	score_add;
 
 	i = 3;
+	score_add = 0;
 	while (i >= 0)
 	{
 		j = i + 1;
@@ -53,6 +59,7 @@ void	slide_right(int *board, int *lock, int offset)
 
 		if (j <= 3 && board[i + offset] == board[j + offset] && lock[j + offset] == 0)
 		{
+			score_add += board[i + offset];
 			board[j + offset] += board[i + offset];
 			board[i + offset] = 0;
 			lock[j + offset] = 1;
@@ -64,14 +71,17 @@ void	slide_right(int *board, int *lock, int offset)
 		}
 		i--;
 	}
+	return (score_add);
 }
 
-void	slide_down(int *board, int *lock, int offset)
+int	slide_down(int *board, int *lock, int offset)
 {
 	int i;
 	int j;
+	int	score_add;
 
 	i = 12;
+	score_add = 0;
 	while (i >= 0)
 	{
 		j = i + 4;
@@ -80,6 +90,7 @@ void	slide_down(int *board, int *lock, int offset)
 
 		if (j <= 12 && board[i + offset] == board[j + offset] && lock[j + offset] == 0)
 		{
+			score_add += board[i + offset];
 			board[j + offset] += board[i + offset];
 			board[i + offset] = 0;
 			lock[j + offset] = 1;
@@ -91,14 +102,17 @@ void	slide_down(int *board, int *lock, int offset)
 		}
 		i -= 4;
 	}
+	return (score_add);
 }
 
-void	slide_up(int *board, int *lock, int offset)
+int	slide_up(int *board, int *lock, int offset)
 {
 	int i;
 	int j;
+	int	score_add;
 
 	i = 0;
+	score_add = 0;
 	while (i <= 12)
 	{
 		j = i - 4;
@@ -107,6 +121,7 @@ void	slide_up(int *board, int *lock, int offset)
 
 		if (j >= 0 && board[i + offset] == board[j + offset] && lock[j + offset] == 0)
 		{
+			score_add += board[i + offset];
 			board[j + offset] += board[i + offset];
 			board[i + offset] = 0;
 			lock[j + offset] = 1;
@@ -118,6 +133,7 @@ void	slide_up(int *board, int *lock, int offset)
 		}
 		i += 4;
 	}
+	return (score_add);
 }
 
 /*
@@ -125,36 +141,41 @@ void	slide_up(int *board, int *lock, int offset)
 ** These version are more robust and I am much more confident that
 ** in their behavior and functionality. But I need to test and validate them.
 */
-void	slide_board(int *board, int *lock, int action)
+int	slide_board(int *board, int *lock, int action)
 {
+	int	score_add;
+
+	score_add = 0;
 	if (action == RIGHT)
 	{
-		slide_right(board, lock,  0);
-		slide_right(board, lock,  4);
-		slide_right(board, lock,  8);
-		slide_right(board, lock, 12);
+		score_add += slide_right(board, lock,  0);
+		score_add += slide_right(board, lock,  4);
+		score_add += slide_right(board, lock,  8);
+		score_add += slide_right(board, lock, 12);
 	}
 	if (action == LEFT)
 	{
-		slide_left(board, lock,  0);
-		slide_left(board, lock,  4);
-		slide_left(board, lock,  8);
-		slide_left(board, lock, 12);
+		score_add += slide_left(board, lock,  0);
+		score_add += slide_left(board, lock,  4);
+		score_add += slide_left(board, lock,  8);
+		score_add += slide_left(board, lock, 12);
 	}
 	if (action == DOWN)
 	{
-		slide_down(board, lock, 0);
-		slide_down(board, lock, 1);
-		slide_down(board, lock, 2);
-		slide_down(board, lock, 3);
+		score_add += slide_down(board, lock, 0);
+		score_add += slide_down(board, lock, 1);
+		score_add += slide_down(board, lock, 2);
+		score_add += slide_down(board, lock, 3);
 	}
 	if (action == UP)
 	{
-		slide_up(board, lock, 0);
-		slide_up(board, lock, 1);
-		slide_up(board, lock, 2);
-		slide_up(board, lock, 3);
+		score_add += slide_up(board, lock, 0);
+		score_add += slide_up(board, lock, 1);
+		score_add += slide_up(board, lock, 2);
+		score_add += slide_up(board, lock, 3);
 	}
+
+	return (score_add);
 }
 
 void	spawn_tiles(int *board)

@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 03:05:42 by home              #+#    #+#             */
-/*   Updated: 2021/10/19 23:05:57 by home             ###   ########.fr       */
+/*   Updated: 2021/10/20 00:07:45 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ typedef struct	s_game_context
 	t_scene_fn	*close_fn;
 
 	void		*meta;
+
+	int			score;
+	int			hiscore;
 
 	bool		game_over;
 }				t_game_context;

@@ -15,9 +15,11 @@
 
 typedef struct	s_gameover_scene
 {
+	SDLX_button	redo;
 	int	ticks;
 
-	SDLX_button	redo;
+	SDL_Rect	s_rect;
+	int			score;
 }				t_gameover_scene;
 
 void	*gameover_scene_init(t_game_context *context, void *vp_scene)
@@ -34,14 +36,26 @@ void	*gameover_scene_init(t_game_context *context, void *vp_scene)
 
 	scene->ticks = 0;
 
+	scene->score = context->score;
+
+	scene->s_rect.h = 8 * DISPLAY_SCALE;
+	scene->s_rect.w = 7 * DISPLAY_SCALE;
+	scene->s_rect.y = 165;
+	scene->s_rect.x = (340 + ((int)SDL_log10(context->score)) * scene->s_rect.w) / 2;
+
 	(void)vp_scene;
 	return (NULL);
 }
 
 void	*gameover_scene_close(t_game_context *context, void *vp_scene)
 {
-	(void)vp_scene;
-	(void)context;
+	t_gameover_scene	*scene;
+
+	scene = vp_scene;
+
+	SDL_free(context->background.sprite_data);
+	SDL_free(scene);
+
 	return (NULL);
 }
 
@@ -53,6 +67,8 @@ void	*gameover_scene_update(t_game_context *context, void *vp_scene)
 
 	SDLX_Button_Update(&(scene->redo));
 	scene->redo.sprite.current = scene->ticks / 3;
+
+	itow(context->score, scene->s_rect, SDLX_GetDisplay());
 
 	scene->ticks++;
 	(void)context;

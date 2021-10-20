@@ -11,10 +11,14 @@ void	game_context_initialize(t_game_context *game_state)
 	game_state->shouldQuit = SDL_FALSE;
 
 	game_state->init_fn = level_init;
+	game_state->init_fn = gameover_scene_init;
 
 	game_state->game_over = false;
 
 	g_GameInput.key_mapper.map_arr = game_key_mapper(&(g_GameInput.key_mapper.amount));
+
+	game_state->score = 0;
+	game_state->hiscore = 0;
 
 	srand(time(NULL));
 }
