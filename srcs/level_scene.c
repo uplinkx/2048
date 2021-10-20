@@ -50,7 +50,7 @@ void	*level_select_close(t_game_context *context, void *vp_scene)
 	return (NULL);
 }
 
-void	*level_select_update(t_game_context *context, void *vp_scene)
+void	*level_select_update(SDL_UNUSED t_game_context *context, void *vp_scene)
 {
 	t_level_scene	*scene;
 	SDLX_Display	*display;
@@ -58,7 +58,7 @@ void	*level_select_update(t_game_context *context, void *vp_scene)
 	scene = vp_scene;
 	display = SDLX_GetDisplay();
 
-	context->shouldQuit = process_user_input(&(scene->action), scene->board, scene->prev_board, sizeof(scene->board));
+	process_user_input(&(scene->action), scene->board, scene->prev_board, sizeof(scene->board));
 
 	if (scene->action != NONE)
 	{
@@ -72,6 +72,5 @@ void	*level_select_update(t_game_context *context, void *vp_scene)
 
 	draw_grid(display);
 	draw_board(scene->board, scene->texture, scene->src_rect);
-	(void)context;
 	return (NULL);
 }

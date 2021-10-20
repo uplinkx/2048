@@ -12,6 +12,7 @@
 SDL_Rect	*carve_2048_texture(void);
 
 SDL_bool	process_user_input(int *action_ptr, int *board, int *old_board, size_t board_size);
+SDLX_iMap	*game_key_mapper(size_t *size);
 
 void	draw_board(int *board, SDL_Texture *texture, SDL_Rect *rects);
 void	draw_grid(SDLX_Display *display);

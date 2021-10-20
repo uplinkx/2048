@@ -14,41 +14,24 @@ void	game_context_initialize(t_game_context *game_state)
 
 	game_state->game_over = false;
 
+	g_GameInput.key_mapper.map_arr = game_key_mapper(&(g_GameInput.key_mapper.amount));
+
 	srand(time(NULL));
 }
-
-// void	main_loop(void *v_cxt)
-// {
-// 	t_game_context *cxt;
-// 	SDLX_Display	*display;
-
-// 	cxt = v_cxt;
-
-// 	display = SDLX_GetDisplay();
-
-// 	// process_user_input(cxt);
-// 	// update_game_state(cxt);
-
-// 	// draw_grid(cxt, display);
-// 	// draw_board(cxt, display);
-
-// 	SDL_RenderPresent(display->renderer);
-// 	SDL_RenderClear(display->renderer);
-// }
 
 void	main_loop(void *context_addr)
 {
 	t_game_context	*context;
 
 	context = context_addr;
-	// context->shouldQuit = SDLX_poll();
+	context->shouldQuit = SDLX_poll();
 	if (context->shouldChange == SDL_TRUE)
 	{
 		context->init_fn(context, context->meta);
 		context->shouldChange = SDL_FALSE;
 	}
 
-	// SDLX_KeyMap(&(g_GameInput.key_mapper), g_GameInput.keystate);
+	SDLX_KeyMap(&(g_GameInput.key_mapper), g_GameInput.keystate);
 	// SDLX_GameInput_Mouse_Fill(&(g_GameInput), SDL_TRUE);
 
 	context->update_fn(context, context->meta);
@@ -59,7 +42,7 @@ void	main_loop(void *context_addr)
 		SDLX_ScreenReset(SDLX_GetDisplay()->renderer, NULL);
 	}
 
-	// SDLX_record_input(NULL);
+	SDLX_record_input(NULL);
 
 	// if (context->shouldChange == SDL_TRUE)
 	// {
