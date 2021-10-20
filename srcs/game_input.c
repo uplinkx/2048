@@ -6,37 +6,34 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 11:30:10 by home              #+#    #+#             */
-/*   Updated: 2021/10/19 22:21:18 by home             ###   ########.fr       */
+/*   Updated: 2021/10/19 23:10:51 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.h"
 
-void	process_user_input(t_game_context *game_state)
+SDL_bool	process_user_input(int *action_ptr, int *board, int *old_board, size_t board_size)
 {
 	SDL_Event		e;
 
 	while (SDL_PollEvent(&e) != 0)
 	{
 		if (e.type == SDL_QUIT)
-		{
-			game_state->active = false;
-			game_state->shouldQuit = SDL_TRUE;
-			break ;
-		}
+			return (SDL_TRUE);
 		else if (e.type == SDL_KEYUP)
 		{
 			if (e.key.keysym.scancode == SDL_SCANCODE_LEFT)
-				game_state->action = LEFT;
+				*(action_ptr) = LEFT;
 			else if (e.key.keysym.scancode == SDL_SCANCODE_RIGHT)
-				game_state->action = RIGHT;
+				*(action_ptr) = RIGHT;
 			else if (e.key.keysym.scancode == SDL_SCANCODE_UP)
-				game_state->action = UP;
+				*(action_ptr) = UP;
 			else if (e.key.keysym.scancode == SDL_SCANCODE_DOWN)
-				game_state->action = DOWN;
+				*(action_ptr) = DOWN;
 
 			if (e.key.keysym.scancode == SDL_SCANCODE_U)
-				memcpy(game_state->board, game_state->prev_board, sizeof(game_state->board));
+				memcpy(board, old_board, board_size);
 		}
 	}
+	return (SDL_FALSE);
 }

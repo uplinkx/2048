@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/04 02:38:19 by home              #+#    #+#             */
-/*   Updated: 2021/03/05 15:58:32 by home             ###   ########.fr       */
+/*   Updated: 2021/10/19 23:09:06 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	color_tiles(int val, SDL_Texture *texture)
 		SDL_SetTextureColorMod(texture, 255, 0, 0);
 }
 
-void	draw_tile(int val, int x, int y, SDLX_Display *display, t_game_context *game_state)
+void	draw_tile(int val, int x, int y, SDL_Texture *texture, SDL_Rect *src_rect)
 {
 	SDL_Rect	dest;
 	SDL_Rect	num_dest;
@@ -48,34 +48,32 @@ void	draw_tile(int val, int x, int y, SDLX_Display *display, t_game_context *gam
 	dest.w = TILE_SIZE * DISPLAY_SCALE;
 	dest.x = (x * DISPLAY_SCALE * TILE_SIZE);
 	dest.y = (y * DISPLAY_SCALE * TILE_SIZE);
-	color_tiles(val, game_state->texture);
-	SDL_RenderCopy(display->renderer, game_state->texture, &(game_state->src_rect[TILE]), &dest);
-	// SDL_SetTextureColorMod(game_state->texture, 255, 255, 255);
+	color_tiles(val, texture);
+	SDL_RenderCopy(SDLX_GetDisplay()->renderer, texture, &(src_rect[TILE]), &dest);
 
 	num_dest.h = TILE_SIZE;
 	num_dest.w = TILE_SIZE;
 	num_dest.x = (x + 1) * DISPLAY_SCALE * TILE_SIZE - (num_dest.w) - 20;
 	num_dest.y = (y) * DISPLAY_SCALE * TILE_SIZE + 32;
 
-	itow(val, num_dest, display);
-	(void)val;
+	itow(val, num_dest, SDLX_GetDisplay());
 }
 
 
-void	draw_board(t_game_context *game_state, SDLX_Display *display)
+void	draw_board(int *board, SDL_Texture *texture, SDL_Rect *rects)
 {
 	int	i;
 
 	i = 0;
 	while (i < 16)
 	{
-		if (game_state->board[i] != 0)
-			draw_tile(game_state->board[i], i % 4, i / 4, display, game_state);
+		if (board[i] != 0)
+			draw_tile(board[i], i % 4, i / 4, texture, rects);
 		i++;
 	}
 }
 
-void	draw_grid(t_game_context *game_state, SDLX_Display *display)
+void	draw_grid(SDLX_Display *display)
 {
 	int	row;
 	int	col;
@@ -94,5 +92,4 @@ void	draw_grid(t_game_context *game_state, SDLX_Display *display)
 		row++;
 	}
 	SDL_SetRenderDrawColor(display->renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
-	(void)game_state;
 }

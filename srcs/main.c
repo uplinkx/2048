@@ -4,48 +4,75 @@
  # include <emscripten.h>
 #endif
 
-void	game_context_initialize(t_game_context *game_state, SDLX_Display *display)
+void	game_context_initialize(t_game_context *game_state)
 {
 	game_state->active = true;
+	game_state->shouldChange = SDL_TRUE;
+	game_state->shouldQuit = SDL_FALSE;
 
-	game_state->texture = IMG_LoadTexture(display->renderer, "resources/2048_texture.png");
-	game_state->src_rect = carve_2048_texture();
+	game_state->init_fn = level_select_init;
 
 	game_state->game_over = false;
-
-	game_state->action = NONE;
-
-	bzero(game_state->board, sizeof(game_state->board));
-
-	game_state->shouldQuit = SDL_FALSE;
 
 	srand(time(NULL));
 }
 
-void	main_loop(void *v_cxt)
+// void	main_loop(void *v_cxt)
+// {
+// 	t_game_context *cxt;
+// 	SDLX_Display	*display;
+
+// 	cxt = v_cxt;
+
+// 	display = SDLX_GetDisplay();
+
+// 	// process_user_input(cxt);
+// 	// update_game_state(cxt);
+
+// 	// draw_grid(cxt, display);
+// 	// draw_board(cxt, display);
+
+// 	SDL_RenderPresent(display->renderer);
+// 	SDL_RenderClear(display->renderer);
+// }
+
+void	main_loop(void *context_addr)
 {
-	t_game_context *cxt;
-	SDLX_Display	*display;
+	t_game_context	*context;
 
-	cxt = v_cxt;
+	context = context_addr;
+	// context->shouldQuit = SDLX_poll();
+	if (context->shouldChange == SDL_TRUE)
+	{
+		context->init_fn(context, context->meta);
+		context->shouldChange = SDL_FALSE;
+	}
 
-	display = SDLX_GetDisplay();
+	// SDLX_KeyMap(&(g_GameInput.key_mapper), g_GameInput.keystate);
+	// SDLX_GameInput_Mouse_Fill(&(g_GameInput), SDL_TRUE);
 
-	process_user_input(cxt);
+	context->update_fn(context, context->meta);
 
-	update_game_state(cxt);
+	if (context->shouldQuit != SDL_TRUE && SDLX_discrete_frames(NULL) != EXIT_FAILURE)
+	{
+		SDLX_RenderQueue_Flush(NULL, NULL, SDL_FALSE);
+		SDLX_ScreenReset(SDLX_GetDisplay()->renderer, NULL);
+	}
 
-	draw_grid(cxt, display);
-	draw_board(cxt, display);
+	// SDLX_record_input(NULL);
 
-	SDL_RenderPresent(display->renderer);
-	SDL_RenderClear(display->renderer);
+	// if (context->shouldChange == SDL_TRUE)
+	// {
+	// 	SDLX_CollisionBucket_Flush(NULL);
+	// 	SDLX_RenderQueue_Flush(NULL, SDLX_GetDisplay()->renderer, SDL_FALSE);
+
+	// 	context->close_fn(context, context->meta);
+	// }
 }
 
 int main(void)
 {
 	t_game_context	cxt;
-	SDLX_Display	*display;
 
 	printf("Hi, there!\n");
 	printf("Random tiles spawn when you slide the board.\n");
@@ -53,8 +80,8 @@ int main(void)
 	printf("You are allowed one undo move, press U key\n");
 	printf("Goodluck and have fun!\n");
 
-	display = SDLX_GetDisplay();
-	game_context_initialize(&(cxt), display);
+	SDLX_GetDisplay();
+	game_context_initialize(&(cxt));
 
 #ifdef EMMC
 	emscripten_set_main_loop_arg(main_loop, (void *)&(cxt), 0, SDL_TRUE);

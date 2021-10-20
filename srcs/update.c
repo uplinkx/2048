@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/03 20:52:34 by home              #+#    #+#             */
-/*   Updated: 2021/03/05 15:49:54 by home             ###   ########.fr       */
+/*   Updated: 2021/10/19 22:47:54 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,16 +177,3 @@ void	spawn_tiles(int *board)
 	}
 }
 
-void	update_game_state(t_game_context *game_state)
-{
-
-	if (game_state->action != NONE)
-	{
-		bzero(game_state->lock, sizeof(game_state->lock));
-		memcpy(game_state->prev_board, game_state->board, sizeof(game_state->prev_board));
-		slide_board(game_state->board, game_state->lock, game_state->action);
-		spawn_tiles(game_state->board);
-	}
-
-	game_state->action = NONE;
-}

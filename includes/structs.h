@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 03:05:42 by home              #+#    #+#             */
-/*   Updated: 2021/10/19 22:34:41 by home             ###   ########.fr       */
+/*   Updated: 2021/10/19 23:05:57 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef enum	actions
 	DOWN =	0b10000,
 }				e_actions;
 
-struct s_context;
-typedef void *(t_scene_fn)(struct s_context *, void *);
+struct s_game_context;
+typedef void *(t_scene_fn)(struct s_game_context *, void *);
 
 typedef struct	s_game_context
 {
@@ -46,15 +46,6 @@ typedef struct	s_game_context
 	t_scene_fn	*close_fn;
 
 	void		*meta;
-
-
-
-	SDL_Texture	*texture;
-	SDL_Rect	*src_rect;
-	int			action;
-	int			lock[16];
-	int			prev_board[16];
-	int			board[16];
 
 	bool		game_over;
 }				t_game_context;

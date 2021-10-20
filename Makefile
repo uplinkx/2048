@@ -40,8 +40,10 @@ SRC_NAMES = \
 	carve_texture \
 	game_input \
 	itow \
+	level_scene \
 	main \
 	render \
+	scene_utils \
 	update \
 
 # List of all the source files, folders are to be added by
