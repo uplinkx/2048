@@ -11,9 +11,6 @@ void	game_context_initialize(t_game_context *game_state, SDLX_Display *display)
 	game_state->texture = IMG_LoadTexture(display->renderer, "resources/2048_texture.png");
 	game_state->src_rect = carve_2048_texture();
 
-	if (game_state->texture == NULL)
-		printf("Texture does not exist\n");
-
 	game_state->game_over = false;
 
 	game_state->action = NONE;
