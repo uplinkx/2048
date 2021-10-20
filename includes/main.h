@@ -12,6 +12,7 @@
 SDL_Rect	*carve_2048_texture(void);
 
 SDL_bool	process_user_input(int *action_ptr, int *board, int *old_board, size_t board_size);
+int			catch_gesture(void);
 SDL_bool	game_over(int *board);
 SDLX_iMap	*game_key_mapper(size_t *size);
 void		*button_trigger_scene_switch(SDLX_button *self, void *vp_context, SDL_UNUSED size_t length);

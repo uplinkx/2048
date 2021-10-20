@@ -11,7 +11,6 @@ void	game_context_initialize(t_game_context *game_state)
 	game_state->shouldQuit = SDL_FALSE;
 
 	game_state->init_fn = level_init;
-	game_state->init_fn = gameover_scene_init;
 
 	game_state->game_over = false;
 

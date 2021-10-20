@@ -70,6 +70,7 @@ void	*level_update(SDL_UNUSED t_game_context *context, void *vp_scene)
 	scene = vp_scene;
 	display = SDLX_GetDisplay();
 
+	catch_gesture();
 	process_user_input(&(scene->action), scene->board, scene->prev_board, sizeof(scene->board));
 
 	if (scene->action != NONE)

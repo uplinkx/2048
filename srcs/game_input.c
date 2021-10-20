@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 11:30:10 by home              #+#    #+#             */
-/*   Updated: 2021/10/19 23:30:42 by home             ###   ########.fr       */
+/*   Updated: 2021/10/20 00:39:08 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,36 @@ SDL_bool	process_user_input(int *action_ptr, int *board, int *old_board, size_t 
 		memcpy(board, old_board, board_size);
 
 	return (SDL_FALSE);
+}
+
+int		catch_gesture(void)
+{
+	int		dx, dy;
+	double	dist;
+	double	angle;
+	int		deg;
+
+	dx = g_GameInput.GameInput.primary_delta.x;
+	dy = g_GameInput.GameInput.primary_delta.y;
+	dist = SDL_sqrt(dx * dx + dy * dy);
+
+	if (dist > 40 && g_GameInput.GameInput.button_primleft)
+	{
+		angle = SDL_atan2(dx, dy);
+		deg = SDLX_Radian_to_Degree(angle) + 360 + 45;
+		deg %= 360;
+
+		// SDL_Log("%d", deg);
+		if (deg < 90)
+			g_GameInput.GameInput.button_DPAD_LEFT |= 2;
+		else if (deg < 180)
+			g_GameInput.GameInput.button_DPAD_DOWN |= 2;
+		else if (deg < 180)
+			g_GameInput.GameInput.button_DPAD_RIGHT |= 2;
+		else
+			g_GameInput.GameInput.button_DPAD_UP |= 2;
+
+	}
+
+	return (NONE);
 }
