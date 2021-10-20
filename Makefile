@@ -10,7 +10,7 @@ SKELE_HTML = --shell-file skeleton.html
 SDL_LIB = -L ~/.brew/lib -l SDL2 -l sdl2_image -l SDL2_ttf
 
 PRELOAD_FILES =	\
-	assets/
+	resources/
 
 PRELOAD = --preload-file $(PRELOAD_FILES)
 
@@ -91,10 +91,10 @@ save: fclean
 re: fclean all
 
 rew:
-	rm -f ../index.data
-	rm -f ../index.html
-	rm -f ../index.js
-	rm -f ../index.wasm
+	rm -f index.data
+	rm -f index.html
+	rm -f index.js
+	rm -f index.wasm
 	make allw
 
 run:

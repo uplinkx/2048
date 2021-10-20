@@ -41,7 +41,8 @@ void	*gameover_scene_init(t_game_context *context, void *vp_scene)
 	scene->s_rect.h = 8 * DISPLAY_SCALE;
 	scene->s_rect.w = 7 * DISPLAY_SCALE;
 	scene->s_rect.y = 165;
-	scene->s_rect.x = (340 + ((int)SDL_log10(context->score)) * scene->s_rect.w) / 2;
+	// scene->s_rect.x = (340 + ((int)SDL_log10(context->score)) * scene->s_rect.w) / 2;
+	scene->s_rect.x = (340 + ((int)log10(context->score)) * scene->s_rect.w) / 2;
 
 	(void)vp_scene;
 	return (NULL);

@@ -1,6 +1,9 @@
 #ifndef MAIN_H
 # define MAIN_H
 
+# include "time.h"
+# include "math.h"
+
 # include "SDLX/SDLX.h"
 
 # include "structs.h"
