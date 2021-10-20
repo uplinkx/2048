@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 11:30:10 by home              #+#    #+#             */
-/*   Updated: 2021/10/20 00:39:08 by home             ###   ########.fr       */
+/*   Updated: 2021/10/20 01:03:23 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		catch_gesture(void)
 			g_GameInput.GameInput.button_DPAD_LEFT |= 2;
 		else if (deg < 180)
 			g_GameInput.GameInput.button_DPAD_DOWN |= 2;
-		else if (deg < 180)
+		else if (deg < 270)
 			g_GameInput.GameInput.button_DPAD_RIGHT |= 2;
 		else
 			g_GameInput.GameInput.button_DPAD_UP |= 2;

@@ -1,8 +1,6 @@
 #ifndef SDLX_CONFIG_H
 # define SDLX_CONFIG_H
 
-# define DISPLAY_SCALE (6)
-
 # define WIN_TITLE	"2048"
 # define DISPLAY_SCALE	(6)
 

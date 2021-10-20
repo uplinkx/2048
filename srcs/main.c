@@ -60,16 +60,17 @@ int main(void)
 {
 	t_game_context	cxt;
 
+	SDLX_GetDisplay();
+
 	printf("Hi, there!\n");
 	printf("Random tiles spawn when you slide the board.\n");
 	printf("To slide the board use the arrow keys.\n");
 	printf("You are allowed one undo move, press U key\n");
 	printf("Goodluck and have fun!\n");
 
-	SDLX_GetDisplay();
 	game_context_initialize(&(cxt));
 
-#ifdef EMMC
+#ifdef EMCC
 	emscripten_set_main_loop_arg(main_loop, (void *)&(cxt), 0, SDL_TRUE);
 #else
 	while (cxt.shouldQuit == SDL_FALSE)
