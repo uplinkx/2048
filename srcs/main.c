@@ -1,5 +1,8 @@
 #include "main.h"
-#include <emscripten.h>
+
+#ifdef EMCC
+ # include <emscripten.h>
+#endif
 
 void	game_context_initialize(t_game_context *game_state, SDLX_Display *display)
 {
@@ -16,6 +19,8 @@ void	game_context_initialize(t_game_context *game_state, SDLX_Display *display)
 	game_state->action = NONE;
 
 	bzero(game_state->board, sizeof(game_state->board));
+
+	game_state->shouldQuit = SDL_FALSE;
 
 	srand(time(NULL));
 }
@@ -53,7 +58,14 @@ int main(void)
 
 	display = SDLX_GetDisplay();
 	game_context_initialize(&(cxt), display);
+
+#ifdef EMMC
 	emscripten_set_main_loop_arg(main_loop, (void *)&(cxt), 0, SDL_TRUE);
+#else
+	while (cxt.shouldQuit == SDL_FALSE)
+		main_loop(&(cxt));
+#endif
+
 
 	return (0);
 }

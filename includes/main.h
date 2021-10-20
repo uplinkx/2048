@@ -3,9 +3,13 @@
 
 # include <time.h>
 
-# include "SDLX.h"
+# include "SDLX/SDLX.h"
 
 # include "structs.h"
+
+# define TILE_SIZE	(16)
+
+# define TILE (1)
 
 SDL_Rect	*carve_2048_texture(void);
 

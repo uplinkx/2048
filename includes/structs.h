@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 03:05:42 by home              #+#    #+#             */
-/*   Updated: 2020/07/23 02:33:37 by home             ###   ########.fr       */
+/*   Updated: 2021/10/19 22:09:13 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct	s_game_context
 
 	int			prev_board[16];
 	int			board[16];
+
+	SDL_bool	shouldQuit;
 }				t_game_context;
 
 #endif

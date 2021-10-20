@@ -6,7 +6,7 @@
 /*   By: home <home@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 11:30:10 by home              #+#    #+#             */
-/*   Updated: 2021/03/05 15:48:32 by home             ###   ########.fr       */
+/*   Updated: 2021/10/19 22:21:18 by home             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	process_user_input(t_game_context *game_state)
 		if (e.type == SDL_QUIT)
 		{
 			game_state->active = false;
+			game_state->shouldQuit = SDL_TRUE;
 			break ;
 		}
 		else if (e.type == SDL_KEYUP)
